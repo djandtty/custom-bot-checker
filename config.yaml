@@ -1,0 +1,39 @@
+# Настройки мониторинга. Меняйте этот файл — код трогать не нужно.
+# Подробности — в README.md.
+
+settings:
+  # record_low — уведомлять, только если цена ниже, чем в последнем уведомлении;
+  # any_drop   — уведомлять при любом снижении относительно прошлой проверки.
+  notify_mode: record_low
+  top_n: 5                    # сколько лучших вариантов показывать
+  request_pause: 1.0          # пауза между запросами к API, секунд
+  max_requests_per_watch: 60  # лимит запросов на одно наблюдение за запуск
+
+watches:
+  - name: "Стамбул ноябрь"      # уникальное имя, используется в сообщениях
+    origin: MOW
+    destination: IST
+    departure_from: 2026-11-10  # диапазон дат вылета (включительно)
+    departure_to: 2026-11-20
+    trip_days_min: 5            # длительность поездки = дата возврата − дата вылета
+    trip_days_max: 9            # (в днях, включительно)
+    direct: false
+    max_price: null             # необязательный потолок; null — без ограничения
+
+  - name: "Стамбул декабрь"
+    origin: MOW
+    destination: IST
+    departure_from: 2026-12-20
+    departure_to: 2026-12-30
+    trip_days_min: 7
+    trip_days_max: 12
+    direct: false
+
+  - name: "Дубай"
+    origin: MOW
+    destination: DXB
+    departure_from: 2027-01-05
+    departure_to: 2027-01-15
+    trip_days_min: 6
+    trip_days_max: 10
+    direct: true

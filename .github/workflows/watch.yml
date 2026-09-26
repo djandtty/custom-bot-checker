@@ -1,0 +1,88 @@
+name: Aviasales price watch
+
+on:
+  schedule:
+    # Каждые 2 часа в :17 (UTC). Не в :00 — в начале часа GitHub сильнее задерживает запуски.
+    - cron: "17 */2 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Режим запуска"
+        type: choice
+        default: normal
+        options:
+          - normal
+          - dry-run
+          - test-telegram
+          - compare-strategies
+      reset_name:
+        description: "Сбросить состояние наблюдения (имя из config.yaml или ALL). Необязательно."
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pricewatch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MODE: ${{ inputs.mode || 'normal' }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Reset watch state
+        if: ${{ inputs.reset_name != '' && inputs.reset_name != null }}
+        env:
+          RESET_NAME: ${{ inputs.reset_name }}
+        run: python -m pricewatch --reset "$RESET_NAME"
+
+      - name: Run monitor
+        env:
+          TP_TOKEN: ${{ secrets.TP_TOKEN }}
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        run: |
+          case "$MODE" in
+            normal)             python -m pricewatch ;;
+            dry-run)            python -m pricewatch --dry-run ;;
+            test-telegram)      python -m pricewatch --test-telegram ;;
+            compare-strategies) python -m pricewatch --compare-strategies ;;
+            *) echo "Неизвестный режим: $MODE"; exit 2 ;;
+          esac
+
+      # Коммитим состояние даже при ошибках (счётчик падений), но только в обычном режиме
+      - name: Commit state and history
+        if: ${{ always() && env.MODE == 'normal' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json history.csv 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Состояние не изменилось — коммитить нечего"
+            exit 0
+          fi
+          git commit -m "chore: update price state [skip ci]"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "Push не удался, повтор через 5 с"
+            sleep 5
+          done
+          exit 1
