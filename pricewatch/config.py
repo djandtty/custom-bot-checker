@@ -37,6 +37,7 @@ class Watch:
     trip_days_min: int
     trip_days_max: int
     direct: bool = False
+    max_transfers: int | None = None   # максимум пересадок в каждую сторону; None — без ограничения
     max_price: int | None = None
 
     def params_hash(self) -> str:
@@ -54,6 +55,9 @@ class Watch:
             "trip_days_max": self.trip_days_max,
             "direct": self.direct,
         }
+        # добавляется только если задан — чтобы не менять хеш существующих наблюдений
+        if self.max_transfers is not None:
+            payload["max_transfers"] = self.max_transfers
         raw = json.dumps(payload, sort_keys=True).encode()
         return hashlib.sha256(raw).hexdigest()[:16]
 
@@ -132,7 +136,7 @@ def _parse_watch(raw, index: int, errors: list[str]) -> Watch | None:
     n_errors = len(errors)
 
     known = {"name", "origin", "destination", "departure_from", "departure_to",
-             "trip_days_min", "trip_days_max", "direct", "max_price"}
+             "trip_days_min", "trip_days_max", "direct", "max_transfers", "max_price"}
     for key in raw:
         if key not in known:
             errors.append(f"{where}: неизвестный параметр {key!r}")
@@ -163,6 +167,10 @@ def _parse_watch(raw, index: int, errors: list[str]) -> Watch | None:
     if not isinstance(direct, bool):
         errors.append(f"{where}: direct должен быть true или false, получено {direct!r}")
 
+    max_transfers = raw.get("max_transfers")
+    if max_transfers is not None:
+        max_transfers = _as_int(max_transfers, "max_transfers", errors, where, 0)
+
     max_price = raw.get("max_price")
     if max_price is not None:
         max_price = _as_int(max_price, "max_price", errors, where, 1)
@@ -172,7 +180,7 @@ def _parse_watch(raw, index: int, errors: list[str]) -> Watch | None:
     return Watch(name=name, origin=codes["origin"], destination=codes["destination"],
                  departure_from=dep_from, departure_to=dep_to,
                  trip_days_min=d_min, trip_days_max=d_max,
-                 direct=direct, max_price=max_price)
+                 direct=direct, max_transfers=max_transfers, max_price=max_price)
 
 
 def parse_config(data) -> Config:

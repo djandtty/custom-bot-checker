@@ -66,8 +66,11 @@ def watch_summary(watch: Watch) -> str:
     line = (f"{escape(watch.origin)} → {escape(watch.destination)}, "
             f"вылет {fmt_date(watch.departure_from)}–{fmt_date(watch.departure_to)}, "
             f"поездка {days} {unit}")
-    if watch.direct:
+    if watch.direct or watch.max_transfers == 0:
         line += ", только прямые"
+    elif watch.max_transfers is not None:
+        n = watch.max_transfers
+        line += f", до {n} {plural(n, 'пересадки', 'пересадок', 'пересадок')}"
     return line
 
 

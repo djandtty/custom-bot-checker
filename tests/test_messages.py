@@ -60,3 +60,10 @@ def test_plural():
     assert messages.plural(3, "день", "дня", "дней") == "дня"
     assert messages.plural(12, "день", "дня", "дней") == "дней"
     assert "поездка 7 дней" in messages.watch_summary(make_watch(trip_days_min=7, trip_days_max=7))
+
+
+def test_summary_transfers():
+    assert messages.watch_summary(make_watch(max_transfers=1)).endswith(", до 1 пересадки")
+    assert messages.watch_summary(make_watch(max_transfers=2)).endswith(", до 2 пересадок")
+    assert messages.watch_summary(make_watch(max_transfers=0)).endswith(", только прямые")
+    assert "пересад" not in messages.watch_summary(make_watch())

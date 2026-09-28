@@ -78,3 +78,20 @@ def test_repo_config_is_valid():
     from pricewatch.config import load_config
     cfg = load_config(Path(__file__).resolve().parent.parent / "config.yaml")
     assert len(cfg.watches) >= 1
+
+
+def test_max_transfers_parsing():
+    assert parse_config(_with_watch(max_transfers=1)).watches[0].max_transfers == 1
+    assert parse_config(_with_watch(max_transfers=0)).watches[0].max_transfers == 0
+    assert parse_config(VALID).watches[0].max_transfers is None
+    with pytest.raises(ConfigError, match="max_transfers"):
+        parse_config(_with_watch(max_transfers=-1))
+    with pytest.raises(ConfigError, match="max_transfers"):
+        parse_config(_with_watch(max_transfers="one"))
+
+
+def test_max_transfers_in_hash_only_when_set():
+    # старые наблюдения без max_transfers сохраняют прежний хеш — без повторного старта
+    assert make_watch(max_transfers=None).params_hash() == make_watch().params_hash()
+    assert make_watch(max_transfers=1).params_hash() != make_watch().params_hash()
+    assert make_watch(max_transfers=1).params_hash() != make_watch(max_transfers=2).params_hash()

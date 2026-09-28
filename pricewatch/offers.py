@@ -90,6 +90,9 @@ def matches_watch(offer: Offer, watch: Watch, today: dt.date) -> bool:
         return False
     if watch.direct and (offer.transfers or offer.return_transfers):
         return False
+    if watch.max_transfers is not None and \
+            max(offer.transfers, offer.return_transfers) > watch.max_transfers:
+        return False
     return True
 
 

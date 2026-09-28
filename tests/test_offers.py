@@ -82,3 +82,19 @@ def test_select_pipeline_sorted_filtered():
     ]
     result = select_offers(raws, make_watch(), NOW)
     assert [o.price for o in result] == [20500, 25000]
+
+
+def test_max_transfers_each_direction():
+    w = make_watch(max_transfers=1)
+    assert matches_watch(offer(1, transfers=1, return_transfers=1), w, TODAY)
+    assert matches_watch(offer(1, transfers=0, return_transfers=0), w, TODAY)
+    assert not matches_watch(offer(1, transfers=2, return_transfers=0), w, TODAY)
+    assert not matches_watch(offer(1, transfers=0, return_transfers=2), w, TODAY)
+    # без ограничения — любые пересадки
+    assert matches_watch(offer(1, transfers=3, return_transfers=2), make_watch(), TODAY)
+
+
+def test_max_transfers_zero_means_direct():
+    w = make_watch(max_transfers=0)
+    assert not matches_watch(offer(1, transfers=1, return_transfers=0), w, TODAY)
+    assert matches_watch(offer(1, transfers=0, return_transfers=0), w, TODAY)

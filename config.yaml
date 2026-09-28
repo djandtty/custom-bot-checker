@@ -18,6 +18,7 @@ watches:
     trip_days_min: 5            # длительность поездки = дата возврата − дата вылета
     trip_days_max: 9            # (в днях, включительно)
     direct: false
+    max_transfers: 1            # не больше 1 пересадки в каждую сторону; null — без ограничения
     max_price: null             # необязательный потолок; null — без ограничения
 
   - name: "Стамбул декабрь"
@@ -28,6 +29,7 @@ watches:
     trip_days_min: 7
     trip_days_max: 12
     direct: false
+    max_transfers: 1
 
   - name: "Дубай"
     origin: MOW
@@ -46,6 +48,7 @@ watches:
     trip_days_min: 12
     trip_days_max: 14
     direct: false
+    max_transfers: 1
 
   - name: "Осака март"
     origin: MOW
@@ -55,3 +58,4 @@ watches:
     trip_days_min: 12
     trip_days_max: 14
     direct: false
+    max_transfers: 1
