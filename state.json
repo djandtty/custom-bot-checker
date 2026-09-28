@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "consecutive_failures": 0,
+    "failure_alert_sent": false,
+    "last_errors": [],
+    "last_run_at": "2026-09-28T13:35:10+00:00"
+  },
+  "version": 1,
+  "watches": {
+    "Осака март": {
+      "last_check_price": 84852,
+      "last_checked_at": "2026-09-28T13:35:10+00:00",
+      "last_notified_at": "2026-09-28T13:35:10+00:00",
+      "last_notified_price": 84852,
+      "min_ever": {
+        "airline": "HU",
+        "departure_date": "2027-03-20",
+        "flight_number": "7986",
+        "found_at": "2026-09-28T13:35:10+00:00",
+        "price": 84852,
+        "return_date": "2027-04-01"
+      },
+      "params_hash": "0522a8e3988eb411",
+      "started_at": "2026-09-28T13:35:10+00:00",
+      "status": "active"
+    },
+    "Токио март": {
+      "last_check_price": 83719,
+      "last_checked_at": "2026-09-28T13:35:10+00:00",
+      "last_notified_at": "2026-09-28T13:35:10+00:00",
+      "last_notified_price": 83719,
+      "min_ever": {
+        "airline": "3U",
+        "departure_date": "2027-03-24",
+        "flight_number": "3888",
+        "found_at": "2026-09-28T13:35:10+00:00",
+        "price": 83719,
+        "return_date": "2027-04-06"
+      },
+      "params_hash": "2f490357ae7880ec",
+      "started_at": "2026-09-28T13:35:10+00:00",
+      "status": "active"
+    }
+  }
+}
