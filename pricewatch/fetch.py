@@ -6,6 +6,11 @@ pairs      — «конкретный день вылета × конкретн�
 
 auto: сначала month; если подходящих вариантов меньше top_n — добавляем
 day_month, затем pairs, пока не исчерпан бюджет запросов.
+
+Для наблюдений с max_transfers: month отдаёт по одному (самому дешёвому) варианту
+на пару дат, и если у него больше пересадок, чем разрешено, пара дат пропадает,
+хотя подходящий рейс на эти даты может быть. Поэтому после month сразу
+дозапрашиваем pairs — только для пар дат, оставшихся без подходящих вариантов.
 """
 
 from __future__ import annotations
@@ -125,7 +130,13 @@ def collect(client: TravelpayoutsClient, watch: Watch, settings: Settings,
     raw: list[dict] = []
     result = FetchResult(offers=[])
     try:
-        order = STRATEGIES if strategy == "auto" else (strategy,)
+        transfer_limited = watch.max_transfers is not None and not watch.direct
+        if strategy != "auto":
+            order: tuple[str, ...] = (strategy,)
+        elif transfer_limited:
+            order = ("month", "pairs")
+        else:
+            order = STRATEGIES
         for name in order:
             skip: set[tuple[str, str]] = set()
             if name == "pairs":
@@ -140,7 +151,7 @@ def collect(client: TravelpayoutsClient, watch: Watch, settings: Settings,
                 log.warning("%s: исчерпан лимит запросов (%d), стратегия %s выполнена не полностью",
                             watch.name, settings.max_requests_per_watch, name)
                 break
-            if strategy == "auto" and len(result.offers) >= settings.top_n:
+            if strategy == "auto" and not transfer_limited and len(result.offers) >= settings.top_n:
                 break
     finally:
         client.budget = None
