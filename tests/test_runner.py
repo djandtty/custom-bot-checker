@@ -135,13 +135,22 @@ def test_cli_reset(tmp_path, monkeypatch):
 
 
 def test_cli_dry_run_does_not_write(tmp_path, monkeypatch, fake_collect, capsys):
-    root = __import__("pathlib").Path(__file__).resolve().parent.parent
     monkeypatch.setenv("TP_TOKEN", "tp-secret-value")
     monkeypatch.delenv("TG_TOKEN", raising=False)
     monkeypatch.setattr("pricewatch.__main__.AirlineNames.load", classmethod(lambda cls: cls()))
     fake_collect["Стамбул ноябрь"] = [18900]
+    config = tmp_path / "config.yaml"
+    config.write_text("""watches:
+  - name: "Стамбул ноябрь"
+    origin: MOW
+    destination: IST
+    departure_from: 2026-11-10
+    departure_to: 2026-11-20
+    trip_days_min: 5
+    trip_days_max: 9
+""", encoding="utf-8")
     state_file, history = tmp_path / "state.json", tmp_path / "history.csv"
-    code = cli.main(["--dry-run", "--config", str(root / "config.yaml"),
+    code = cli.main(["--dry-run", "--config", str(config),
                      "--state", str(state_file), "--history", str(history)])
     out = capsys.readouterr().out
     assert code == 0 and "Старт мониторинга: Стамбул ноябрь" in out

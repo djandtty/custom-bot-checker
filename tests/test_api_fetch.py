@@ -103,8 +103,8 @@ def test_throttle_pause():
     client = TravelpayoutsClient("x", pause=1.0, session=session,
                                  sleep=lambda s: (sleeps.append(s), t.__setitem__(0, t[0] + s)),
                                  clock=lambda: t[0])
-    for _ in range(3):
-        client.prices_for_dates("MOW", "IST", "2026-11", "2026-11", False)
+    for month in ("2026-10", "2026-11", "2026-12"):
+        client.prices_for_dates("MOW", "IST", month, month, False)
     assert sleeps == [1.0, 1.0]
 
 
@@ -177,3 +177,12 @@ def test_transfer_limited_fully_covered_makes_no_extra_requests():
                                                                     "data": [raw_offer(20000)]}))
     res = collect(client, w, Settings(top_n=5), NOW)
     assert len(session.calls) == 1 and len(res.offers) == 1
+
+
+def test_identical_requests_are_cached_within_run():
+    client, session, _ = client_for(lambda p, n: FakeResponse(body={"success": True,
+                                                                    "data": [raw_offer(100)]}))
+    a = client.prices_for_dates("MOW", "TYO", "2027-03", "2027-04", False)
+    b = client.prices_for_dates("MOW", "TYO", "2027-03", "2027-04", False)
+    client.prices_for_dates("MOW", "OSA", "2027-03", "2027-04", False)
+    assert a == b and len(session.calls) == 2 and client.requests_made == 2

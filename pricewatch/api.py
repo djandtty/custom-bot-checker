@@ -42,6 +42,9 @@ class TravelpayoutsClient:
         self._last_request_at: float | None = None
         self.requests_made = 0
         self.budget: int | None = None   # None — без лимита
+        # Кэш ответов на время запуска: соседние наблюдения часто делают
+        # одинаковые месячные запросы — повторно их не отправляем
+        self._cache: dict[tuple, list[dict]] = {}
 
     def _throttle(self) -> None:
         if self._last_request_at is not None:
@@ -103,6 +106,9 @@ class TravelpayoutsClient:
     def prices_for_dates(self, origin: str, destination: str, departure_at: str,
                          return_at: str, direct: bool) -> list[dict]:
         """Все билеты туда-обратно для пары дат (ГГГГ-ММ или ГГГГ-ММ-ДД), со всех страниц."""
+        key = (origin, destination, departure_at, return_at, direct)
+        if key in self._cache:
+            return list(self._cache[key])
         results: list[dict] = []
         for page in range(1, MAX_PAGES + 1):
             params = {
@@ -125,7 +131,8 @@ class TravelpayoutsClient:
             results.extend(d for d in data if isinstance(d, dict))
             if len(data) < PAGE_LIMIT:
                 break
-        return results
+        self._cache[key] = results
+        return list(results)
 
 
 def _retry_after(resp: requests.Response) -> float | None:

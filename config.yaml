@@ -10,23 +10,184 @@ settings:
   max_requests_per_watch: 60  # лимит запросов на одно наблюдение за запуск
 
 watches:
-  - name: "Токио март"      # уникальное имя, используется в сообщениях
+  # Все наблюдения: Москва → город и обратно, поездка 12–16 дней,
+  # не больше 1 пересадки в каждую сторону.
+
+  # ── Токио ──
+  - name: "Токио 12.03–14.03"
     origin: MOW
     destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
-    departure_from: 2027-03-20  # диапазон дат вылета (включительно)
-    departure_to: 2027-03-25
-    trip_days_min: 12            # длительность поездки = дата возврата − дата вылета
-    trip_days_max: 14            # (в днях, включительно)
+    departure_from: 2027-03-12
+    departure_to: 2027-03-14
+    trip_days_min: 12
+    trip_days_max: 16
     direct: false
-    max_transfers: 1            # не больше 1 пересадки в каждую сторону; null — без ограничения
-    max_price: null             # необязательный потолок; null — без ограничения
+    max_transfers: 1
+    max_price: null
 
-  - name: "Осака март"
+  - name: "Токио 15.03–19.03"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-03-15
+    departure_to: 2027-03-19
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 20.03–21.03"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-03-20
+    departure_to: 2027-03-21
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 22.03–26.03"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-03-22
+    departure_to: 2027-03-26
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 27.03–28.03"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-03-27
+    departure_to: 2027-03-28
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 29.03–02.04"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-03-29
+    departure_to: 2027-04-02
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 03.04–04.04"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-04-03
+    departure_to: 2027-04-04
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 05.04–09.04"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-04-05
+    departure_to: 2027-04-09
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Токио 10.04–11.04"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-04-10
+    departure_to: 2027-04-11
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+
+  # ── Осака ──
+  - name: "Осака 12.03–14.03"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-03-12
+    departure_to: 2027-03-14
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Осака 15.03–19.03"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-03-15
+    departure_to: 2027-03-19
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Осака 20.03–21.03"
     origin: MOW
     destination: OSA            # все аэропорты Осаки (Кансай, Итами)
     departure_from: 2027-03-20
-    departure_to: 2027-03-25
+    departure_to: 2027-03-21
     trip_days_min: 12
-    trip_days_max: 14
+    trip_days_max: 16
     direct: false
     max_transfers: 1
+    max_price: null
+
+  - name: "Осака 22.03–26.03"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-03-22
+    departure_to: 2027-03-26
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Осака 27.03–28.03"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-03-27
+    departure_to: 2027-03-28
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Осака 29.03–02.04"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-03-29
+    departure_to: 2027-04-02
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
+
+  - name: "Осака 03.04–04.04"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-04-03
+    departure_to: 2027-04-04
+    trip_days_min: 12
+    trip_days_max: 16
+    direct: false
+    max_transfers: 1
+    max_price: null
