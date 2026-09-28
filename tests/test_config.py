@@ -95,3 +95,14 @@ def test_max_transfers_in_hash_only_when_set():
     assert make_watch(max_transfers=None).params_hash() == make_watch().params_hash()
     assert make_watch(max_transfers=1).params_hash() != make_watch().params_hash()
     assert make_watch(max_transfers=1).params_hash() != make_watch(max_transfers=2).params_hash()
+
+
+def test_min_drop_settings():
+    cfg = parse_config(dict(VALID, settings={"min_drop_rub": 500, "min_drop_pct": 1.5}))
+    assert cfg.settings.min_drop_rub == 500 and cfg.settings.min_drop_pct == 1.5
+    defaults = parse_config(VALID).settings
+    assert defaults.min_drop_rub == 1000 and defaults.min_drop_pct == 2.0
+    with pytest.raises(ConfigError, match="min_drop_pct"):
+        parse_config(dict(VALID, settings={"min_drop_pct": 150}))
+    with pytest.raises(ConfigError, match="min_drop_rub"):
+        parse_config(dict(VALID, settings={"min_drop_rub": -1}))

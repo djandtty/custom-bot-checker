@@ -113,7 +113,9 @@ def evaluate(watch: Watch, settings: Settings, entry: dict | None,
         prev = entry.get("last_check_price")
     else:
         prev = entry.get("last_notified_price")
-    dropped = prev is not None and best.price < prev
+    # Мелкие колебания кэша (десятки рублей) не считаем снижением
+    dropped = prev is not None and best.price < prev and \
+        prev - best.price >= settings.min_drop(prev)
     if watch.max_price is not None and best.price > watch.max_price:
         dropped = False
 

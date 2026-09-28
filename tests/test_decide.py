@@ -139,3 +139,42 @@ def test_finished_watch_with_new_dates_restarts(settings):
     out = decide.evaluate(moved, settings, e,
                           [offer(19000, dep="2026-12-02", ret="2026-12-08")], after)
     assert out.kind == decide.START and out.entry["status"] == "active"
+
+
+def test_min_drop_threshold_ignores_small_fluctuations():
+    s = Settings(notify_mode="record_low", min_drop_rub=1000, min_drop_pct=2)
+    w = make_watch()
+    e = run(w, s, None, [70656]).entry
+    # −24 ₽ — шум кэша, уведомления нет; порог = max(1000, 2% от 70 656 = 1413,12)
+    out = run(w, s, e, [70632], LATER)
+    assert out.kind == decide.QUIET and out.entry["last_notified_price"] == 70656
+    assert out.entry["last_check_price"] == 70632
+    assert run(w, s, out.entry, [69300], LATER).kind == decide.QUIET   # −1 356 < 1 413
+    out = run(w, s, out.entry, [69242], LATER)                          # −1 414 ≥ 1 413,12
+    assert out.kind == decide.DROP and out.prev_price == 70656
+
+
+def test_min_drop_accumulates_in_record_low():
+    s = Settings(notify_mode="record_low", min_drop_rub=1000, min_drop_pct=0)
+    w = make_watch()
+    e = run(w, s, None, [20000]).entry
+    for price in (19700, 19400, 19100):          # по 300 ₽ — тишина
+        out = run(w, s, e, [price], LATER)
+        assert out.kind == decide.QUIET
+        e = out.entry
+    out = run(w, s, e, [19000], LATER)           # всего −1 000 от последнего уведомления
+    assert out.kind == decide.DROP and out.prev_price == 20000
+
+
+def test_min_drop_rub_is_used_when_larger_than_pct():
+    s = Settings(min_drop_rub=1000, min_drop_pct=2)   # 2% от 20 000 = 400 < 1000
+    assert s.min_drop(20000) == 1000
+    assert s.min_drop(100000) == 2000
+
+
+def test_zero_threshold_still_requires_real_drop():
+    s = Settings(min_drop_rub=0, min_drop_pct=0)
+    w = make_watch()
+    e = run(w, s, None, [20000]).entry
+    assert run(w, s, e, [20000], LATER).kind == decide.QUIET
+    assert run(w, s, e, [19999], LATER).kind == decide.DROP

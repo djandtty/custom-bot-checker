@@ -25,6 +25,12 @@ class Settings:
     top_n: int = 5
     request_pause: float = 1.0          # секунд между запросами к API
     max_requests_per_watch: int = 60    # бюджет запросов на наблюдение за запуск
+    min_drop_rub: int = 1000            # минимальное снижение для уведомления, ₽
+    min_drop_pct: float = 2.0           # ... или в процентах; берётся большее из двух
+
+    def min_drop(self, prev_price: int) -> float:
+        """Насколько должна упасть цена относительно prev_price, чтобы уведомить."""
+        return max(self.min_drop_rub, prev_price * self.min_drop_pct / 100)
 
 
 @dataclass(frozen=True)
@@ -101,7 +107,8 @@ def _parse_settings(raw, errors: list[str]) -> Settings:
     if not isinstance(raw, dict):
         errors.append("settings должен быть словарём")
         return Settings()
-    known = {"notify_mode", "top_n", "request_pause", "max_requests_per_watch"}
+    known = {"notify_mode", "top_n", "request_pause", "max_requests_per_watch",
+             "min_drop_rub", "min_drop_pct"}
     for key in raw:
         if key not in known:
             errors.append(f"settings: неизвестный параметр {key!r}")
@@ -118,8 +125,17 @@ def _parse_settings(raw, errors: list[str]) -> Settings:
         pause = 1.0
     budget = _as_int(raw.get("max_requests_per_watch", 60), "max_requests_per_watch",
                      errors, "settings", 1) or 60
+    min_drop_rub = _as_int(raw.get("min_drop_rub", 1000), "min_drop_rub", errors, "settings", 0)
+    if min_drop_rub is None:
+        min_drop_rub = 1000
+    min_drop_pct = raw.get("min_drop_pct", 2.0)
+    if isinstance(min_drop_pct, bool) or not isinstance(min_drop_pct, (int, float)) \
+            or not 0 <= min_drop_pct < 100:
+        errors.append(f"settings.min_drop_pct должен быть числом от 0 до 100, получено {min_drop_pct!r}")
+        min_drop_pct = 2.0
     return Settings(notify_mode=mode, top_n=top_n, request_pause=float(pause),
-                    max_requests_per_watch=budget)
+                    max_requests_per_watch=budget, min_drop_rub=min_drop_rub,
+                    min_drop_pct=float(min_drop_pct))
 
 
 def _parse_watch(raw, index: int, errors: list[str]) -> Watch | None:
