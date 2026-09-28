@@ -37,3 +37,21 @@ watches:
     trip_days_min: 6
     trip_days_max: 10
     direct: true
+
+  - name: "Токио март"
+    origin: MOW
+    destination: TYO            # все аэропорты Токио (Нарита, Ханэда)
+    departure_from: 2027-03-20
+    departure_to: 2027-03-25
+    trip_days_min: 12
+    trip_days_max: 14
+    direct: false
+
+  - name: "Осака март"
+    origin: MOW
+    destination: OSA            # все аэропорты Осаки (Кансай, Итами)
+    departure_from: 2027-03-20
+    departure_to: 2027-03-25
+    trip_days_min: 12
+    trip_days_max: 14
+    direct: false
