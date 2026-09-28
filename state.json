@@ -3,10 +3,129 @@
     "consecutive_failures": 0,
     "failure_alert_sent": false,
     "last_errors": [],
-    "last_run_at": "2026-09-28T13:35:10+00:00"
+    "last_run_at": "2026-09-28T14:25:45+00:00"
   },
   "version": 1,
   "watches": {
+    "Осака 03.04–04.04": {
+      "last_check_price": 89717,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 89717,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-04-04",
+        "flight_number": "8028",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 89717,
+        "return_date": "2027-04-18"
+      },
+      "params_hash": "479010106886ef40",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Осака 12.03–14.03": {
+      "last_check_price": 69390,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 69390,
+      "min_ever": {
+        "airline": "HU",
+        "departure_date": "2027-03-12",
+        "flight_number": "7986",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 69390,
+        "return_date": "2027-03-24"
+      },
+      "params_hash": "3d3814ab4605510b",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Осака 15.03–19.03": {
+      "last_check_price": 83243,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 83243,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-03-15",
+        "flight_number": "656",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 83243,
+        "return_date": "2027-03-29"
+      },
+      "params_hash": "618d3342ec5c84aa",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Осака 20.03–21.03": {
+      "last_check_price": 84852,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 84852,
+      "min_ever": {
+        "airline": "HU",
+        "departure_date": "2027-03-20",
+        "flight_number": "7986",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 84852,
+        "return_date": "2027-04-01"
+      },
+      "params_hash": "b910525ccaf71284",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Осака 22.03–26.03": {
+      "last_check_price": 89131,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 89131,
+      "min_ever": {
+        "airline": "HU",
+        "departure_date": "2027-03-22",
+        "flight_number": "7986",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 89131,
+        "return_date": "2027-04-04"
+      },
+      "params_hash": "04662ea207eebd84",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Осака 27.03–28.03": {
+      "last_check_price": 86709,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 86709,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-03-27",
+        "flight_number": "8028",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 86709,
+        "return_date": "2027-04-12"
+      },
+      "params_hash": "5224c7a9af0f7359",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Осака 29.03–02.04": {
+      "last_check_price": 85809,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 85809,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-03-31",
+        "flight_number": "656",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 85809,
+        "return_date": "2027-04-14"
+      },
+      "params_hash": "7609a138bdf146b9",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
     "Осака март": {
       "last_check_price": 84852,
       "last_checked_at": "2026-09-28T13:35:10+00:00",
@@ -22,6 +141,159 @@
       },
       "params_hash": "0522a8e3988eb411",
       "started_at": "2026-09-28T13:35:10+00:00",
+      "status": "active"
+    },
+    "Токио 03.04–04.04": {
+      "last_check_price": 81705,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 81705,
+      "min_ever": {
+        "airline": "3U",
+        "departure_date": "2027-04-04",
+        "flight_number": "3888",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 81705,
+        "return_date": "2027-04-16"
+      },
+      "params_hash": "b64ca9325750956c",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 05.04–09.04": {
+      "last_check_price": 76949,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 76949,
+      "min_ever": {
+        "airline": "CA",
+        "departure_date": "2027-04-07",
+        "flight_number": "910",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 76949,
+        "return_date": "2027-04-21"
+      },
+      "params_hash": "da60f78b9b97c69d",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 10.04–11.04": {
+      "last_check_price": 76949,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 76949,
+      "min_ever": {
+        "airline": "CA",
+        "departure_date": "2027-04-11",
+        "flight_number": "754",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 76949,
+        "return_date": "2027-04-25"
+      },
+      "params_hash": "2e39f9e01da9d7d4",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 12.03–14.03": {
+      "last_check_price": 70656,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 70656,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-03-12",
+        "flight_number": "342",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 70656,
+        "return_date": "2027-03-26"
+      },
+      "params_hash": "00920d30586087f1",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 15.03–19.03": {
+      "last_check_price": 74920,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 74920,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-03-15",
+        "flight_number": "656",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 74920,
+        "return_date": "2027-03-29"
+      },
+      "params_hash": "88cfee54225ad4a4",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 20.03–21.03": {
+      "last_check_price": 83967,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 83967,
+      "min_ever": {
+        "airline": "3U",
+        "departure_date": "2027-03-21",
+        "flight_number": "3888",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 83967,
+        "return_date": "2027-04-06"
+      },
+      "params_hash": "7c2ed889ba37b20a",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 22.03–26.03": {
+      "last_check_price": 83719,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 83719,
+      "min_ever": {
+        "airline": "3U",
+        "departure_date": "2027-03-24",
+        "flight_number": "3888",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 83719,
+        "return_date": "2027-04-06"
+      },
+      "params_hash": "f3261336bef0b47c",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 27.03–28.03": {
+      "last_check_price": 81658,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 81658,
+      "min_ever": {
+        "airline": "3U",
+        "departure_date": "2027-03-28",
+        "flight_number": "3888",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 81658,
+        "return_date": "2027-04-11"
+      },
+      "params_hash": "0aa0ad51242ea3d6",
+      "started_at": "2026-09-28T14:25:45+00:00",
+      "status": "active"
+    },
+    "Токио 29.03–02.04": {
+      "last_check_price": 75795,
+      "last_checked_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_at": "2026-09-28T14:25:45+00:00",
+      "last_notified_price": 75795,
+      "min_ever": {
+        "airline": "CZ",
+        "departure_date": "2027-04-01",
+        "flight_number": "656",
+        "found_at": "2026-09-28T14:25:45+00:00",
+        "price": 75795,
+        "return_date": "2027-04-14"
+      },
+      "params_hash": "b4f8f78bccf2cd77",
+      "started_at": "2026-09-28T14:25:45+00:00",
       "status": "active"
     },
     "Токио март": {
