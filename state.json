@@ -3,13 +3,13 @@
     "consecutive_failures": 0,
     "failure_alert_sent": false,
     "last_errors": [],
-    "last_run_at": "2026-09-30T23:48:59+00:00"
+    "last_run_at": "2026-10-01T05:53:09+00:00"
   },
   "version": 1,
   "watches": {
     "Осака 03.04–04.04": {
-      "last_check_price": 92199,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_check_price": 90474,
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 89686,
       "min_ever": {
@@ -26,7 +26,7 @@
     },
     "Осака 12.03–14.03": {
       "last_check_price": 68861,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T14:25:45+00:00",
       "last_notified_price": 69390,
       "min_ever": {
@@ -43,7 +43,7 @@
     },
     "Осака 15.03–19.03": {
       "last_check_price": 82703,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 83215,
       "min_ever": {
@@ -60,7 +60,7 @@
     },
     "Осака 20.03–21.03": {
       "last_check_price": 83839,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T14:25:45+00:00",
       "last_notified_price": 84852,
       "min_ever": {
@@ -77,7 +77,7 @@
     },
     "Осака 22.03–26.03": {
       "last_check_price": 87556,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-29T19:25:29+00:00",
       "last_notified_price": 83120,
       "min_ever": {
@@ -93,8 +93,8 @@
       "status": "active"
     },
     "Осака 27.03–28.03": {
-      "last_check_price": 88681,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_check_price": 89547,
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T14:25:45+00:00",
       "last_notified_price": 86709,
       "min_ever": {
@@ -111,7 +111,7 @@
     },
     "Осака 29.03–02.04": {
       "last_check_price": 93029,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 85779,
       "min_ever": {
@@ -145,7 +145,7 @@
     },
     "Токио 03.04–04.04": {
       "last_check_price": 81498,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 81677,
       "min_ever": {
@@ -161,8 +161,8 @@
       "status": "active"
     },
     "Токио 05.04–09.04": {
-      "last_check_price": 76346,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_check_price": 76351,
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T14:25:45+00:00",
       "last_notified_price": 76949,
       "min_ever": {
@@ -179,7 +179,7 @@
     },
     "Токио 10.04–11.04": {
       "last_check_price": 76348,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 76922,
       "min_ever": {
@@ -196,7 +196,7 @@
     },
     "Токио 12.03–14.03": {
       "last_check_price": 64984,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-29T12:52:14+00:00",
       "last_notified_price": 62436,
       "min_ever": {
@@ -213,7 +213,7 @@
     },
     "Токио 15.03–19.03": {
       "last_check_price": 70174,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-29T19:25:29+00:00",
       "last_notified_price": 70172,
       "min_ever": {
@@ -230,7 +230,7 @@
     },
     "Токио 20.03–21.03": {
       "last_check_price": 82584,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 83436,
       "min_ever": {
@@ -246,17 +246,17 @@
       "status": "active"
     },
     "Токио 22.03–26.03": {
-      "last_check_price": 82146,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_check_price": 81897,
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 83267,
       "min_ever": {
         "airline": "3U",
         "departure_date": "2027-03-24",
         "flight_number": "3888",
-        "found_at": "2026-09-30T23:48:59+00:00",
-        "price": 82146,
-        "return_date": "2027-04-06"
+        "found_at": "2026-10-01T05:53:09+00:00",
+        "price": 81897,
+        "return_date": "2027-04-07"
       },
       "params_hash": "f3261336bef0b47c",
       "started_at": "2026-09-28T14:25:45+00:00",
@@ -264,7 +264,7 @@
     },
     "Токио 27.03–28.03": {
       "last_check_price": 81034,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T23:16:25+00:00",
       "last_notified_price": 79873,
       "min_ever": {
@@ -280,8 +280,8 @@
       "status": "active"
     },
     "Токио 29.03–02.04": {
-      "last_check_price": 75829,
-      "last_checked_at": "2026-09-30T23:48:59+00:00",
+      "last_check_price": 75366,
+      "last_checked_at": "2026-10-01T05:53:09+00:00",
       "last_notified_at": "2026-09-28T16:45:18+00:00",
       "last_notified_price": 75769,
       "min_ever": {
