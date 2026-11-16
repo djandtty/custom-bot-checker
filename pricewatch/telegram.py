@@ -17,7 +17,7 @@ class TelegramError(Exception):
 class Notifier:
     """Интерфейс: send(text) отправляет HTML-сообщение или бросает TelegramError."""
 
-    def send(self, text: str) -> None:  # pragma: no cover - интерфейс
+    def send(self, text: str, silent: bool = False) -> None:  # pragma: no cover - интерфейс
         raise NotImplementedError
 
 
@@ -27,9 +27,9 @@ class TelegramNotifier(Notifier):
         self._chat_id = chat_id
         self._session = session or requests.Session()
 
-    def send(self, text: str) -> None:
+    def send(self, text: str, silent: bool = False) -> None:
         payload = {"chat_id": self._chat_id, "text": text, "parse_mode": "HTML",
-                   "disable_web_page_preview": True}
+                   "disable_web_page_preview": True, "disable_notification": silent}
         for attempt in range(3):
             try:
                 resp = self._session.post(self._url, json=payload, timeout=30)
@@ -59,7 +59,9 @@ class TelegramNotifier(Notifier):
 class ConsoleNotifier(Notifier):
     """--dry-run: печатает сообщение вместо отправки."""
 
-    def send(self, text: str) -> None:
+    def send(self, text: str, silent: bool = False) -> None:
+        if silent:
+            print("(беззвучно)")
         print("─" * 60)
         print(text)
         print("─" * 60, flush=True)

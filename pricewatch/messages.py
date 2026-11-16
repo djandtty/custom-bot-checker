@@ -128,6 +128,20 @@ def recovery_message() -> str:
     return "✅ <b>Мониторинг цен снова работает</b>"
 
 
+def heartbeat_message(watch_name: str | None, offer: Offer | None, airline_name: AirlineNamer,
+                      runs_24h: int, last_check: dt.datetime, errors: int = 0) -> str:
+    lines = ["✅ <b>Бот работает</b>"]
+    if offer is not None:
+        lines.append(f"Самый дешёвый сейчас (1 взрослый, туда-обратно): <b>{fmt_price(offer.price)}</b>")
+        lines.append(f"{escape(watch_name or '')}: {_offer_details(offer, airline_name)}")
+    else:
+        lines.append("Подходящих билетов в кэше сейчас нет.")
+    lines.append(f"Проверок за сутки: {runs_24h}, последняя в {last_check:%H:%M} МСК")
+    if errors:
+        lines.append(f"⚠️ Ошибок в последней проверке: {errors} — подробности в логах GitHub Actions")
+    return "\n".join(lines)
+
+
 def test_message(watch_names: list[str]) -> str:
     names = ", ".join(escape(n) for n in watch_names) or "—"
     return f"🧪 <b>Тестовое сообщение</b>\nБот мониторинга цен на связи.\nНаблюдения: {names}"

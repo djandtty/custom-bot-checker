@@ -27,6 +27,7 @@ class Settings:
     max_requests_per_watch: int = 60    # бюджет запросов на наблюдение за запуск
     min_drop_rub: int = 1000            # минимальное снижение для уведомления, ₽
     min_drop_pct: float = 2.0           # ... или в процентах; берётся большее из двух
+    heartbeat_hour: int | None = 9      # ежедневная отбивка после этого часа по Москве; None — выкл.
 
     def min_drop(self, prev_price: int) -> float:
         """Насколько должна упасть цена относительно prev_price, чтобы уведомить."""
@@ -108,7 +109,7 @@ def _parse_settings(raw, errors: list[str]) -> Settings:
         errors.append("settings должен быть словарём")
         return Settings()
     known = {"notify_mode", "top_n", "request_pause", "max_requests_per_watch",
-             "min_drop_rub", "min_drop_pct"}
+             "min_drop_rub", "min_drop_pct", "heartbeat_hour"}
     for key in raw:
         if key not in known:
             errors.append(f"settings: неизвестный параметр {key!r}")
@@ -133,9 +134,16 @@ def _parse_settings(raw, errors: list[str]) -> Settings:
             or not 0 <= min_drop_pct < 100:
         errors.append(f"settings.min_drop_pct должен быть числом от 0 до 100, получено {min_drop_pct!r}")
         min_drop_pct = 2.0
+    heartbeat_hour = raw.get("heartbeat_hour", 9)
+    if heartbeat_hour is not None and (isinstance(heartbeat_hour, bool)
+                                       or not isinstance(heartbeat_hour, int)
+                                       or not 0 <= heartbeat_hour <= 23):
+        errors.append(f"settings.heartbeat_hour должен быть часом от 0 до 23 или null, "
+                      f"получено {heartbeat_hour!r}")
+        heartbeat_hour = 9
     return Settings(notify_mode=mode, top_n=top_n, request_pause=float(pause),
                     max_requests_per_watch=budget, min_drop_rub=min_drop_rub,
-                    min_drop_pct=float(min_drop_pct))
+                    min_drop_pct=float(min_drop_pct), heartbeat_hour=heartbeat_hour)
 
 
 def _parse_watch(raw, index: int, errors: list[str]) -> Watch | None:

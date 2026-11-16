@@ -106,3 +106,11 @@ def test_min_drop_settings():
         parse_config(dict(VALID, settings={"min_drop_pct": 150}))
     with pytest.raises(ConfigError, match="min_drop_rub"):
         parse_config(dict(VALID, settings={"min_drop_rub": -1}))
+
+
+def test_heartbeat_hour_setting():
+    assert parse_config(VALID).settings.heartbeat_hour == 9
+    assert parse_config(dict(VALID, settings={"heartbeat_hour": None})).settings.heartbeat_hour is None
+    assert parse_config(dict(VALID, settings={"heartbeat_hour": 20})).settings.heartbeat_hour == 20
+    with pytest.raises(ConfigError, match="heartbeat_hour"):
+        parse_config(dict(VALID, settings={"heartbeat_hour": 24}))

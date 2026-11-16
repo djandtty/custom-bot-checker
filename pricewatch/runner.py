@@ -11,6 +11,7 @@ from .api import ApiError, AuthError, TravelpayoutsClient
 from .config import Config, Watch
 from .fetch import STRATEGIES, collect
 from .messages import AirlineNamer
+from .offers import Offer
 from .telegram import Notifier, TelegramError
 
 log = logging.getLogger(__name__)
@@ -23,6 +24,7 @@ class RunReport:
     history: list[dict] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
     sent: int = 0
+    best: dict[str, Offer] = field(default_factory=dict)   # лучший билет по наблюдению
 
 
 def _history_row(watch: Watch, outcome: decide.Outcome, found: int, now: dt.datetime) -> dict:
@@ -71,6 +73,8 @@ def check_watch(watch: Watch, config: Config, state: dict, client: Travelpayouts
     result = collect(client, watch, config.settings, now, strategy=strategy)
     outcome = decide.evaluate(watch, config.settings, entry, result.offers, now)
     report.history.append(_history_row(watch, outcome, len(result.offers), now))
+    if outcome.best is not None:
+        report.best[watch.name] = outcome.best
 
     best = f"{outcome.best.price} ₽" if outcome.best else "—"
     log.info("%s: запросов %d (%s), записей %d, подходящих %d, лучшая цена %s → %s%s",
@@ -134,6 +138,53 @@ def record_run_result(state: dict, errors: list[str], notifier: Notifier | None,
             log.error("Не удалось отправить сообщение о восстановлении: %s", exc)
             return
     meta.update(consecutive_failures=0, failure_alert_sent=False, last_errors=[])
+
+
+MSK = dt.timezone(dt.timedelta(hours=3), "МСК")   # без перехода на летнее время
+
+
+def track_recent_runs(state: dict, now: dt.datetime) -> int:
+    """Запоминает время запуска и возвращает число запусков за последние 24 часа."""
+    meta = state["meta"]
+    cutoff = now - dt.timedelta(hours=24)
+    runs = []
+    for ts in meta.get("recent_runs") or []:
+        try:
+            if dt.datetime.fromisoformat(ts) > cutoff:
+                runs.append(ts)
+        except (TypeError, ValueError):
+            continue
+    runs.append(now.replace(microsecond=0).isoformat())
+    meta["recent_runs"] = runs
+    return len(runs)
+
+
+def maybe_send_heartbeat(state: dict, report: RunReport, config: Config, notifier: Notifier,
+                         names: AirlineNamer, now: dt.datetime) -> bool:
+    """Раз в сутки, с первым запуском после heartbeat_hour по Москве, — беззвучная отбивка."""
+    hour = config.settings.heartbeat_hour
+    if hour is None:
+        return False
+    local = now.astimezone(MSK)
+    today = local.date().isoformat()
+    meta = state["meta"]
+    if local.hour < hour or meta.get("heartbeat_sent_date") == today:
+        return False
+    cheapest_name, cheapest = None, None
+    for name, offer in report.best.items():
+        if cheapest is None or offer.price < cheapest.price:
+            cheapest_name, cheapest = name, offer
+    text = messages.heartbeat_message(cheapest_name, cheapest, names,
+                                      runs_24h=len(meta.get("recent_runs") or []) or 1,
+                                      last_check=local, errors=len(report.errors))
+    try:
+        notifier.send(text, silent=True)
+    except TelegramError as exc:
+        log.error("Не удалось отправить ежедневную отбивку: %s", exc)
+        return False
+    meta["heartbeat_sent_date"] = today
+    log.info("Отправлена ежедневная отбивка")
+    return True
 
 
 def compare_strategies(config: Config, client: TravelpayoutsClient, now: dt.datetime,

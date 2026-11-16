@@ -13,7 +13,8 @@ from .airlines import AirlineNames
 from .api import TravelpayoutsClient
 from .config import Config, ConfigError, load_config
 from .fetch import STRATEGIES
-from .runner import compare_strategies, record_run_result, run_watches
+from .runner import (compare_strategies, maybe_send_heartbeat, record_run_result,
+                     run_watches, track_recent_runs)
 from .state import append_history, load_state, save_state
 from .telegram import ConsoleNotifier, Notifier, TelegramError, TelegramNotifier
 
@@ -157,6 +158,9 @@ def cmd_run(args) -> int:
     report = run_watches(config, state, client, notifier, names, now, strategy=args.strategy)
     log.info("Итого: наблюдений %d, запросов к API %d, сообщений %d, ошибок %d",
              len(config.watches), client.requests_made, report.sent, len(report.errors))
+
+    track_recent_runs(state, now)
+    maybe_send_heartbeat(state, report, config, notifier, names, now)
 
     if args.dry_run:
         log.info("dry-run: state.json и history.csv не изменены")
